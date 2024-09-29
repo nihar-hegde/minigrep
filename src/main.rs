@@ -1,4 +1,5 @@
 use std::env;
+use std::error::Error;
 use std::fs;
 use std::process;
 
@@ -12,11 +13,15 @@ fn main() {
 
     println!("Searching for query {}", config.query);
     println!("In file path {}", config.file_path);
+    run(config);
+}
 
-    let contents =
-        fs::read_to_string(config.file_path).expect("Should have been able to read the file!");
+fn run(config: Config) -> Result<(), Box<dyn Error>> {
+    let contents = fs::read_to_string(config.file_path)?;
 
     println!("With Text:\n{contents}");
+
+    Ok(())
 }
 
 struct Config {
